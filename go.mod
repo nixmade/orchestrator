@@ -1,16 +1,16 @@
 module github.com/nixmade/orchestrator
 
-go 1.22
+go 1.23
 
 require (
 	github.com/dgraph-io/badger/v4 v4.2.0
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/go-chi/render v1.0.3
 	github.com/jackc/pgx/v5 v5.6.0
-	github.com/ohler55/ojg v1.22.1
+	github.com/ohler55/ojg v1.24.0
 	github.com/rs/zerolog v1.33.0
 	github.com/stretchr/testify v1.9.0
-	github.com/urfave/cli/v2 v2.27.2
+	github.com/urfave/cli/v2 v2.27.4
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 )
 
