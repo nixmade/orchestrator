@@ -179,7 +179,7 @@ func TestWebController(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	var clientTargets []*ClientState

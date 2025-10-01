@@ -37,7 +37,7 @@ func TestCreateNamespace(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	const namespaceName = "TestCreateNamespace"
@@ -74,7 +74,7 @@ func TestFindorCreateEntity(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	n, err := e.createNamespace(namespaceName)

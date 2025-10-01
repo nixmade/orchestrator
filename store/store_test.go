@@ -127,7 +127,7 @@ func TestInMemoryStore(t *testing.T) {
 	}
 
 	defer func() {
-		assert.Error(t, store.Close())
+		assert.Nil(t, store.Close())
 	}()
 
 	if err := testStore(t, store); err != nil {
@@ -152,10 +152,10 @@ func TestBadgerDBStore(t *testing.T) {
 	}
 
 	defer func() {
-		assert.Error(t, os.RemoveAll(storeLocation))
+		assert.Nil(t, os.RemoveAll(storeLocation))
 	}()
 	defer func() {
-		assert.Error(t, store.Close())
+		assert.Nil(t, store.Close())
 	}()
 
 	if err := testStore(t, store); err != nil {
@@ -175,7 +175,7 @@ func TestPgxStore(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, store.Close())
+		assert.Nil(t, store.Close())
 	}()
 
 	if err := testStore(t, store); err != nil {

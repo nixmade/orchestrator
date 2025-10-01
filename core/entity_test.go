@@ -62,7 +62,7 @@ func TestCreateEntity(t *testing.T) {
 	}
 
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	if e.Name != entityName {
@@ -102,7 +102,7 @@ func TestSetTargetVersion(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	rollout, err := e.findOrCreateRollout()
@@ -142,7 +142,7 @@ func TestSetRolloutOptions(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	rollout, err := e.findOrCreateRollout()
@@ -212,7 +212,7 @@ func TestSetEntityController(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	if err := e.setTargetController(&CustomEntityTestController{}); err != nil {
@@ -256,7 +256,7 @@ func TestUpdateEntityTargets(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 	var clientTargets []*ClientState
 
@@ -417,7 +417,7 @@ func TestReturnClientState(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Error(t, e.store.Close())
+		assert.Nil(t, e.store.Close())
 	}()
 
 	var clientTargets []*ClientState
