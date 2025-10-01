@@ -59,7 +59,7 @@ func TestUpdateLastKnownVersions(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -138,7 +138,7 @@ func TestSetAllLastKnownGood(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -182,7 +182,7 @@ func TestDetermineCurrentState(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -246,7 +246,7 @@ func TestIsStateChanged(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -309,7 +309,7 @@ func TestMonitorTargets(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -407,7 +407,7 @@ func TestSelectTargets(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -453,7 +453,7 @@ func TestRollouNewTargets(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -527,7 +527,7 @@ func TestUpdateRollingVersion(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()
@@ -596,7 +596,7 @@ func TestForceRollingVersion(t *testing.T) {
 		return
 	}
 	defer func() {
-		assert.Nil(t, e.store.Close())
+		assert.NoError(t, e.store.Close())
 	}()
 
 	targets, err := e.getEntityTargets()

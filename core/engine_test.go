@@ -62,7 +62,7 @@ func cleanupTestEngine(t *testing.T, engine *Engine, testName string) {
 	if err := engine.store.Close(); err != nil {
 		fmt.Println(err.Error())
 	}
-	assert.Nil(t, os.RemoveAll("./"+testName))
+	assert.NoError(t, os.RemoveAll("./"+testName))
 }
 
 func setupNamespace(engine *Engine, namespaceName, entityName string, numTargets int) ([]*ClientState, error) {
@@ -772,7 +772,7 @@ func TestEngineSaveLoad(t *testing.T) {
 	require.NoError(t, err)
 	// Call Orchestrate and save the state
 	defer func() {
-		assert.Nil(t, dbstore.Close())
+		assert.NoError(t, dbstore.Close())
 	}()
 	{
 		engine, err := setupTestEngineWithStore(namespaceName, dbstore)
