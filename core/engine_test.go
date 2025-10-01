@@ -10,6 +10,7 @@ import (
 
 	"github.com/nixmade/orchestrator/store"
 	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -54,14 +55,14 @@ func setupTestEngine(testName string) (*Engine, error) {
 	return setupTestEngineWithStore(testName, dbstore)
 }
 
-func cleanupTestEngine(engine *Engine, testName string) {
+func cleanupTestEngine(t *testing.T, engine *Engine, testName string) {
 	if err := engine.Shutdown(); err != nil {
 		fmt.Println(err.Error())
 	}
 	if err := engine.store.Close(); err != nil {
 		fmt.Println(err.Error())
 	}
-	os.RemoveAll("./" + testName)
+	assert.Error(t, os.RemoveAll("./"+testName))
 }
 
 func setupNamespace(engine *Engine, namespaceName, entityName string, numTargets int) ([]*ClientState, error) {
@@ -308,7 +309,7 @@ func TestRollbackEntityOrchestrate(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 
 	var clientTargets []*ClientState
 	clientTargets, err = setupNamespace(engine, namespaceName, entityName, numTargets)
@@ -333,7 +334,7 @@ func TestRolloutEntityOrchestrate(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 
 	var clientTargets []*ClientState
 	clientTargets, err = setupNamespace(engine, namespaceName, entityName, numTargets)
@@ -398,7 +399,7 @@ func TestBlueGreenRollout(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 	RegisteredTargetControllers = append(RegisteredTargetControllers, &CustomEngineTestController{logger: engine.logger})
 
 	var clientTargets []*ClientState
@@ -520,7 +521,7 @@ func TestBlueGreenRollback(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 
 	var clientTargets []*ClientState
 	clientTargets, err = setupNamespace(engine, namespaceName, entityName, numTargets)
@@ -671,7 +672,7 @@ func TestMultipleNamespaceEntityRollout(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 
 	var clientTargets []*ClientState
 	clientTargets, err = setupNamespace(engine, namespaceName, entityName, numTargets)
@@ -718,7 +719,7 @@ func TestMultipleNamespaceEntityRollback(t *testing.T) {
 		t.Fatalf("Failed to setup Test Engine %s", err)
 		return
 	}
-	defer cleanupTestEngine(engine, namespaceName)
+	defer cleanupTestEngine(t, engine, namespaceName)
 
 	var clientTargets []*ClientState
 	clientTargets, err = setupNamespace(engine, namespaceName, entityName, numTargets)
@@ -770,7 +771,9 @@ func TestEngineSaveLoad(t *testing.T) {
 	}
 	require.NoError(t, err)
 	// Call Orchestrate and save the state
-	defer dbstore.Close()
+	defer func() {
+		assert.Error(t, dbstore.Close())
+	}()
 	{
 		engine, err := setupTestEngineWithStore(namespaceName, dbstore)
 		if err != nil {

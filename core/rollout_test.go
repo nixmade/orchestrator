@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
 )
 
 func setupEntity() (*Entity, []*ClientState, error) {
@@ -57,7 +58,9 @@ func TestUpdateLastKnownVersions(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -134,7 +137,9 @@ func TestSetAllLastKnownGood(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -176,7 +181,9 @@ func TestDetermineCurrentState(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -238,7 +245,9 @@ func TestIsStateChanged(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -299,7 +308,9 @@ func TestMonitorTargets(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -395,7 +406,9 @@ func TestSelectTargets(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -439,7 +452,9 @@ func TestRollouNewTargets(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -511,7 +526,9 @@ func TestUpdateRollingVersion(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {
@@ -578,7 +595,9 @@ func TestForceRollingVersion(t *testing.T) {
 		t.Fatalf("Failed to setup entity '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	targets, err := e.getEntityTargets()
 	if err != nil {

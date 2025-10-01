@@ -9,7 +9,14 @@ import (
 )
 
 func (app *App) setTargetVersion(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	var err error
+	defer func() {
+		if closeErr := r.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 	namespace := chi.URLParam(r, "namespace")
 	entity := chi.URLParam(r, "entity")
 

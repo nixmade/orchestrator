@@ -9,6 +9,7 @@ import (
 
 	"github.com/nixmade/orchestrator/store"
 	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
 )
 
 func createEntity(entityName string, logger zerolog.Logger) (*Entity, error) {
@@ -60,7 +61,9 @@ func TestCreateEntity(t *testing.T) {
 		return
 	}
 
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	if e.Name != entityName {
 		t.Fatalf("Entity names do not match expected '%s', actual '%s'", entityName, e.Name)
@@ -98,7 +101,9 @@ func TestSetTargetVersion(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	rollout, err := e.findOrCreateRollout()
 	if err != nil {
@@ -136,7 +141,9 @@ func TestSetRolloutOptions(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	rollout, err := e.findOrCreateRollout()
 	if err != nil {
@@ -204,7 +211,9 @@ func TestSetEntityController(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	if err := e.setTargetController(&CustomEntityTestController{}); err != nil {
 		t.Fatalf("Failed to set rollout controller: %s", err)
@@ -246,7 +255,9 @@ func TestUpdateEntityTargets(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 	var clientTargets []*ClientState
 
 	for i := 0; i < 5; i++ {
@@ -345,7 +356,7 @@ func TestUpdateEntityTargets(t *testing.T) {
 				entityTarget.State.CurrentVersion.ChangeTimestamp, changeTimestamps[entityTarget.Name])
 			return
 		}
-		if updateTimestamps[entityTarget.Name] == entityTarget.State.CurrentVersion.LastMessage.Timestamp {
+		if time.Time.Equal(updateTimestamps[entityTarget.Name], entityTarget.State.CurrentVersion.LastMessage.Timestamp) {
 			t.Fatalf("Expected update timestamp '%+v' not to match previous time stamp '%+v', since there are error updates",
 				entityTarget.State.CurrentVersion.LastMessage.Timestamp, updateTimestamps[entityTarget.Name])
 			return
@@ -384,12 +395,12 @@ func TestUpdateEntityTargets(t *testing.T) {
 			t.Fatalf("Expected Entity Target to be v2 but found '%s'", entityTarget.State.CurrentVersion.Version)
 			return
 		}
-		if changeTimestamps[entityTarget.Name] == entityTarget.State.CurrentVersion.ChangeTimestamp {
+		if time.Time.Equal(changeTimestamps[entityTarget.Name], entityTarget.State.CurrentVersion.ChangeTimestamp) {
 			t.Fatalf("Expected change timestamp '%+v' not to match previous time stamp '%+v' for target '%s', since there is a change in version",
 				entityTarget.State.CurrentVersion.ChangeTimestamp, changeTimestamps[entityTarget.Name], entityTarget.Name)
 			return
 		}
-		if updateTimestamps[entityTarget.Name] == entityTarget.State.CurrentVersion.LastMessage.Timestamp {
+		if time.Time.Equal(updateTimestamps[entityTarget.Name], entityTarget.State.CurrentVersion.LastMessage.Timestamp) {
 			t.Fatalf("Expected update timestamp '%+v' not to match previous time stamp '%+v' for target '%s', since there is an error report",
 				entityTarget.State.CurrentVersion.LastMessage.Timestamp, updateTimestamps[entityTarget.Name], entityTarget.Name)
 			return
@@ -405,7 +416,9 @@ func TestReturnClientState(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	var clientTargets []*ClientState
 

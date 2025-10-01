@@ -239,8 +239,7 @@ func (s *PgxStore) Count(prefix string) (uint64, error) {
 
 // Close
 func (s *PgxStore) Close() error {
-	s.pgconn.Close(context.Background())
-	return nil
+	return s.pgconn.Close(context.Background())
 }
 
 type PgxStoreTest struct {
@@ -277,6 +276,5 @@ func (s *PgxStoreTest) Close() error {
 	if err != nil {
 		return err
 	}
-	s.pgconn.Close(context.Background())
-	return nil
+	return s.pgconn.Close(context.Background())
 }

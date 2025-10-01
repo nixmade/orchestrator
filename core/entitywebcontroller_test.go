@@ -12,10 +12,15 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/nixmade/orchestrator/response"
 	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
 )
 
 func selection(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	defer func() {
+		if err := r.Body.Close(); err != nil {
+			fmt.Printf("Failed to close body %v", err)
+		}
+	}()
 	var tsRequest TargetSelectionRequest
 	if err := json.NewDecoder(r.Body).Decode(&tsRequest); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -35,7 +40,11 @@ func selection(w http.ResponseWriter, r *http.Request) {
 }
 
 func approval(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	defer func() {
+		if err := r.Body.Close(); err != nil {
+			fmt.Printf("Failed to close body %v", err)
+		}
+	}()
 	var tsRequest TargetApprovalRequest
 	if err := json.NewDecoder(r.Body).Decode(&tsRequest); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -55,7 +64,11 @@ func approval(w http.ResponseWriter, r *http.Request) {
 }
 
 func monitoring(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	defer func() {
+		if err := r.Body.Close(); err != nil {
+			fmt.Printf("Failed to close body %v", err)
+		}
+	}()
 	var tsRequest TargetMonitoringRequest
 	if err := json.NewDecoder(r.Body).Decode(&tsRequest); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -76,7 +89,11 @@ func monitoring(w http.ResponseWriter, r *http.Request) {
 }
 
 func removal(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	defer func() {
+		if err := r.Body.Close(); err != nil {
+			fmt.Printf("Failed to close body %v", err)
+		}
+	}()
 	var tsRequest TargetRemovalRequest
 	if err := json.NewDecoder(r.Body).Decode(&tsRequest); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -96,7 +113,11 @@ func removal(w http.ResponseWriter, r *http.Request) {
 }
 
 func extmonitoring(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	defer func() {
+		if err := r.Body.Close(); err != nil {
+			fmt.Printf("Failed to close body %v", err)
+		}
+	}()
 	var tsRequest ExternalMonitoringRequest
 	if err := json.NewDecoder(r.Body).Decode(&tsRequest); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -134,7 +155,7 @@ func TestWebController(t *testing.T) {
 	}
 	defer func() {
 		if err := srv.Shutdown(context.TODO()); err != nil {
-			fmt.Printf("Failed to shutdiwn %v", err)
+			fmt.Printf("Failed to shutdown %v", err)
 		}
 	}()
 	go func() {
@@ -157,7 +178,9 @@ func TestWebController(t *testing.T) {
 		t.Fatalf("Expected entity to be created, found error %s", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	var clientTargets []*ClientState
 

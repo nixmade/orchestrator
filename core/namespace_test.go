@@ -7,6 +7,7 @@ import (
 
 	"github.com/nixmade/orchestrator/store"
 	"github.com/rs/zerolog"
+	"github.com/stretchr/testify/assert"
 )
 
 func createEngine(logger zerolog.Logger, testName string) (*Engine, error) {
@@ -35,7 +36,9 @@ func TestCreateNamespace(t *testing.T) {
 		t.Fatalf("Error creating engine '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	const namespaceName = "TestCreateNamespace"
 	n, err := e.createNamespace(namespaceName)
@@ -70,7 +73,9 @@ func TestFindorCreateEntity(t *testing.T) {
 		t.Fatalf("Error creating engine '%s'", err)
 		return
 	}
-	defer e.store.Close()
+	defer func() {
+		assert.Error(t, e.store.Close())
+	}()
 
 	n, err := e.createNamespace(namespaceName)
 

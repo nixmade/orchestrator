@@ -50,7 +50,13 @@ func GetJSON(url, token string, value interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return errorMessage(url, resp)
@@ -100,7 +106,13 @@ func PostJSON(url, token string, in interface{}, out interface{}) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return errorMessage(url, resp)
@@ -129,7 +141,13 @@ func Delete(url, token string) error {
 	if err != nil {
 		return err
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if closeErr := resp.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 	defer http.DefaultClient.CloseIdleConnections()
 
 	if resp.StatusCode != http.StatusOK {

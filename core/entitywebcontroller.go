@@ -123,7 +123,13 @@ func (e *EntityWebTargetController) TargetApproval(clientTargets []*ClientState)
 	if err != nil {
 		return nil, err
 	}
-	defer respBody.Close()
+	defer func() {
+		if closeErr := respBody.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	var trResponse TargetApprovalResponse
 	if err := json.NewDecoder(respBody).Decode(&trResponse); err != nil {
@@ -159,7 +165,13 @@ func (e *EntityWebTargetController) TargetMonitoring(clientTarget *ClientState) 
 	if err != nil {
 		return err
 	}
-	defer respBody.Close()
+	defer func() {
+		if closeErr := respBody.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	var trResponse TargetMonitoringResponse
 	if err := json.NewDecoder(respBody).Decode(&trResponse); err != nil {
@@ -189,7 +201,13 @@ func (e *EntityWebTargetController) TargetRemoval(clientTargets []*ClientState, 
 	if err != nil {
 		return nil, err
 	}
-	defer respBody.Close()
+	defer func() {
+		if closeErr := respBody.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	var trResponse TargetRemovalResponse
 	if err := json.NewDecoder(respBody).Decode(&trResponse); err != nil {
@@ -226,7 +244,13 @@ func (e *EntityWebMonitoringController) ExternalMonitoring(clientTargets []*Clie
 	if err != nil {
 		return err
 	}
-	defer respBody.Close()
+	defer func() {
+		if closeErr := respBody.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 
 	var extResponse ExternalMonitoringResponse
 	if err := json.NewDecoder(respBody).Decode(&extResponse); err != nil {

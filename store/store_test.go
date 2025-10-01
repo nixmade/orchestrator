@@ -9,6 +9,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -125,7 +126,9 @@ func TestInMemoryStore(t *testing.T) {
 		return
 	}
 
-	defer store.Close()
+	defer func() {
+		assert.Error(t, store.Close())
+	}()
 
 	if err := testStore(t, store); err != nil {
 		t.Fatalf("Found error %s", err)
@@ -148,8 +151,12 @@ func TestBadgerDBStore(t *testing.T) {
 		return
 	}
 
-	defer os.RemoveAll(storeLocation)
-	defer store.Close()
+	defer func() {
+		assert.Error(t, os.RemoveAll(storeLocation))
+	}()
+	defer func() {
+		assert.Error(t, store.Close())
+	}()
 
 	if err := testStore(t, store); err != nil {
 		t.Fatalf("Found error %s", err)
@@ -167,7 +174,9 @@ func TestPgxStore(t *testing.T) {
 		t.Fatalf("failed to create store error %s", err)
 		return
 	}
-	defer store.Close()
+	defer func() {
+		assert.Error(t, store.Close())
+	}()
 
 	if err := testStore(t, store); err != nil {
 		t.Fatalf("Found error %s", err)

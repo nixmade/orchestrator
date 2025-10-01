@@ -9,12 +9,18 @@ import (
 )
 
 func (app *App) orchestrate(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	var err error
+	defer func() {
+		if closeErr := r.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 	namespace := chi.URLParam(r, "namespace")
 	entity := chi.URLParam(r, "entity")
 
 	var clientTargets []*ClientState
-	var err error
 
 	if err := json.NewDecoder(r.Body).Decode(&clientTargets); err != nil {
 		response.Error(w, http.StatusBadRequest, err.Error())
@@ -32,7 +38,14 @@ func (app *App) orchestrate(w http.ResponseWriter, r *http.Request) {
 }
 
 func (app *App) reportCurrentStatus(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+	var err error
+	defer func() {
+		if closeErr := r.Body.Close(); closeErr != nil {
+			if err != nil {
+				err = closeErr
+			}
+		}
+	}()
 	namespace := chi.URLParam(r, "namespace")
 	entity := chi.URLParam(r, "entity")
 
