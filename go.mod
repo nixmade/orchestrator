@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/chi/v5 v5.2.4
 	github.com/go-chi/render v1.0.3
 	github.com/jackc/pgx/v5 v5.8.0
-	github.com/ohler55/ojg v1.27.0
+	github.com/ohler55/ojg v1.28.0
 	github.com/rs/zerolog v1.34.0
 	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.7
