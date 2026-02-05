@@ -3,7 +3,7 @@ module github.com/nixmade/orchestrator
 go 1.25
 
 require (
-	github.com/dgraph-io/badger/v4 v4.9.0
+	github.com/dgraph-io/badger/v4 v4.9.1
 	github.com/go-chi/chi/v5 v5.2.4
 	github.com/go-chi/render v1.0.3
 	github.com/jackc/pgx/v5 v5.8.0
