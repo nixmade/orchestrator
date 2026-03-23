@@ -1,12 +1,12 @@
 module github.com/nixmade/orchestrator
 
-go 1.25
+go 1.25.0
 
 require (
 	github.com/dgraph-io/badger/v4 v4.9.1
 	github.com/go-chi/chi/v5 v5.2.5
 	github.com/go-chi/render v1.0.3
-	github.com/jackc/pgx/v5 v5.8.0
+	github.com/jackc/pgx/v5 v5.9.1
 	github.com/ohler55/ojg v1.28.0
 	github.com/rs/zerolog v1.34.0
 	github.com/stretchr/testify v1.11.1
