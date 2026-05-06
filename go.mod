@@ -8,7 +8,7 @@ require (
 	github.com/go-chi/render v1.0.3
 	github.com/jackc/pgx/v5 v5.9.2
 	github.com/ohler55/ojg v1.28.1
-	github.com/rs/zerolog v1.34.0
+	github.com/rs/zerolog v1.35.1
 	github.com/stretchr/testify v1.11.1
 	github.com/urfave/cli/v2 v2.27.7
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
