@@ -4,9 +4,9 @@ go 1.26.2
 
 require (
 	github.com/dgraph-io/badger/v4 v4.9.1
-	github.com/go-chi/chi/v5 v5.2.5
+	github.com/go-chi/chi/v5 v5.3.0
 	github.com/go-chi/render v1.0.3
-	github.com/jackc/pgx/v5 v5.9.2
+	github.com/jackc/pgx/v5 v5.10.0
 	github.com/ohler55/ojg v1.28.1
 	github.com/rs/zerolog v1.35.1
 	github.com/stretchr/testify v1.11.1
