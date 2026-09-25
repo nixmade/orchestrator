@@ -1,6 +1,6 @@
 module github.com/nixmade/orchestrator
 
-go 1.26.2
+go 1.27
 
 require (
 	github.com/dgraph-io/badger/v4 v4.9.6

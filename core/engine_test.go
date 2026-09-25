@@ -378,7 +378,7 @@ func (c *CustomEngineTestController) TargetRemoval(targets []*ClientState, selec
 	var retClientTargets []*ClientState
 	for _, removeTarget := range targets {
 		if selection > 0 {
-			//nolint:ineffassign
+			//nolint:staticcheck,ineffassign
 			selection--
 			retClientTargets = append(retClientTargets, removeTarget)
 			c.logger.Info().Msgf("TargetRemoval removed old '%s'", removeTarget.Name)
