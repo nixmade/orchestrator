@@ -4,7 +4,7 @@ go 1.27
 
 require (
 	github.com/dgraph-io/badger/v4 v4.9.6
-	github.com/go-chi/chi/v5 v5.3.2
+	github.com/go-chi/chi/v5 v5.4.0
 	github.com/go-chi/render v1.0.3
 	github.com/jackc/pgx/v5 v5.11.0
 	github.com/ohler55/ojg v1.28.7
